@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import exp from 'constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,16 +16,20 @@ export class LoginComponent {
 
   loginObj: Login;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.loginObj = new Login();
   }
 
   onLogin() {
-    debugger;
-    this.http.post('https://todo-app-iota-three-31.vercel.app/token', this.loginObj).subscribe((res:any)=>{
+    const formData = new FormData();
+    formData.append('username', this.loginObj.email);
+    formData.append('password', this.loginObj.hashed_password);
+
+    this.http.post('https://todo-app-iota-three-31.vercel.app/token', formData).subscribe((res:any)=>{
       if(res.token_type === 'bearer'){
         alert('login Success');
         localStorage.setItem('loginToken', res.access_token);
+        this.router.navigateByUrl('/todo');
       } else {
         alert(res.detail);
       }
@@ -33,10 +38,10 @@ export class LoginComponent {
 }
 
 export class Login {
-  Emailid: string;
-  Password: string;
+  email: string;
+  hashed_password: string;
   constructor() {
-    this.Emailid = '';
-    this.Password = '';
+    this.email = '';
+    this.hashed_password = '';
   }
 }

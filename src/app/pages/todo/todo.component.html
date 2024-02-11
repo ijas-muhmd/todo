@@ -1,0 +1,21 @@
+<div>
+    <input type="text" [(ngModel)]="newTodo.name" placeholder="Name">
+    <input type="text" [(ngModel)]="newTodo.description" placeholder="Description">
+    <button (click)="addTodo()">Add Todo</button>
+</div>
+
+<div *ngFor="let todo of todos">
+    <input type="checkbox" [(ngModel)]="todo.completed" (change)="completeTodo(todo)">
+    <input *ngIf="todo.completed && !todo.image_url" type="file" (change)="onFileSelected($event)">
+    <span>{{ todo.name }} - {{ todo.description }}</span>
+    <button (click)="deleteTodo(todo.id!)">Delete</button>
+    <button (click)="editTodo(todo)">Edit</button>
+
+    <div *ngIf="todo.editMode">
+        <input type="text" [(ngModel)]="todo.name" placeholder="Name">
+        <input type="text" [(ngModel)]="todo.description" placeholder="Description">
+        <button (click)="updateTodos(todo)">Save</button>
+        <button (click)="cancelEdit(todo)">Cancel</button>
+    </div>
+    
+</div>
