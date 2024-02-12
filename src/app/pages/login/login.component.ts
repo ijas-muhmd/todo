@@ -35,6 +35,19 @@ export class LoginComponent {
       }
     })
   }
+
+  onRegister() {
+    debugger;
+    this.http.post('https://todo-app-iota-three-31.vercel.app/register', this.loginObj).subscribe((res:any)=>{
+      console.log(res)
+      if(res.message === 'User created successfully'){
+        alert('Registration Success');
+        this.router.navigateByUrl('/login');
+      } else {
+        alert(res.detail);
+      }
+    })
+  }
 }
 
 export class Login {

@@ -27,9 +27,6 @@ export class TodoComponent {
   getTodos() {
     this.http.get('https://todo-app-iota-three-31.vercel.app/list-all-todo/', { headers: this.httpHeaders }).subscribe((res: any) => {
       this.todos = res;
-      // for (let todo of this.todos) {
-      //   console.log(todo);
-      // }
     });
   }
 
